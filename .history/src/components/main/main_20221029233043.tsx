@@ -16,7 +16,11 @@ type MainScreenProps = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {placesCount, offerData} = props;
   const cityName = useSelector(selectCount);
-  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
+  // eslint-disable-next-line no-console
+  console.log(offerData);
+  const apartmentArray = offerData.filter((city) => city.city.name === cityName);
+  // eslint-disable-next-line no-console
+  console.log(apartmentArray);
   return (
     <div className="page page--gray page--main">
       <Header></Header>
@@ -53,7 +57,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className='cities__map map'>
-                <MainMap offerData={apartmentArray} />
+                <MainMap offerData={offerData} />
               </section>
             </div>
           </div>

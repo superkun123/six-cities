@@ -16,7 +16,13 @@ type MainScreenProps = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {placesCount, offerData} = props;
   const cityName = useSelector(selectCount);
-  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
+  const apartmentArray = offerData.filter((city) => city.city.name === cityName);
+  // useEffect(() => {
+  //   apartmentArray = offerData.filter((city) => city.city.name === cityName);
+  // }, [cityName]);
+
+  // eslint-disable-next-line no-console
+  console.log(apartmentArray);
   return (
     <div className="page page--gray page--main">
       <Header></Header>

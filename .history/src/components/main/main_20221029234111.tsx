@@ -2,6 +2,7 @@ import OfferCardList from '../offer-card/offer-card-list';
 import { OfferData } from '../../types/types';
 import Header from '../header/header';
 import MainMap from '../map/map';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCount } from '../../store/reducer';
 import CityBtnList from '../cities-btn-list/cities-btn-list';
@@ -16,7 +17,13 @@ type MainScreenProps = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {placesCount, offerData} = props;
   const cityName = useSelector(selectCount);
-  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
+  let apartmentArray = offerData.filter((city) => city.city.name === cityName);
+  useEffect(() => {
+    apartmentArray = offerData.filter((city) => city.city.name === cityName);
+  }, [cityName]);
+
+  // eslint-disable-next-line no-console
+  console.log(apartmentArray);
   return (
     <div className="page page--gray page--main">
       <Header></Header>
@@ -53,7 +60,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className='cities__map map'>
-                <MainMap offerData={apartmentArray} />
+                <MainMap offerData={offerData} />
               </section>
             </div>
           </div>

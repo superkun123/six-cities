@@ -2,9 +2,10 @@ import OfferCardList from '../offer-card/offer-card-list';
 import { OfferData } from '../../types/types';
 import Header from '../header/header';
 import MainMap from '../map/map';
-import { useSelector } from 'react-redux';
-import { selectCount } from '../../store/reducer';
 import CityBtnList from '../cities-btn-list/cities-btn-list';
+import { useDispatch, useSelector } from 'react-redux';
+import { CityChange } from '../../store/actions';
+import { selectCount } from '../../store/reducer';
 
 
 type MainScreenProps = {
@@ -15,13 +16,15 @@ type MainScreenProps = {
 
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {placesCount, offerData} = props;
+  const dispatch = useDispatch();
+  const currentCity = 'Рим';
   const cityName = useSelector(selectCount);
-  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
   return (
     <div className="page page--gray page--main">
       <Header></Header>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
+        <button onClick={() => dispatch(CityChange(currentCity))}>Амстердам</button>
         <div className="tabs">
           <section className="locations container">
             <CityBtnList />
@@ -48,12 +51,12 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferCardList offerData={apartmentArray } />
+                <OfferCardList offerData={offerData} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className='cities__map map'>
-                <MainMap offerData={apartmentArray} />
+                <MainMap offerData={offerData} />
               </section>
             </div>
           </div>

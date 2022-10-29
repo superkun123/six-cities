@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import OfferCardList from '../offer-card/offer-card-list';
 import { OfferData } from '../../types/types';
 import Header from '../header/header';
@@ -16,7 +17,13 @@ type MainScreenProps = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {placesCount, offerData} = props;
   const cityName = useSelector(selectCount);
-  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
+  const apartmentArray = offerData.filter((city) => console.log(cityName));
+  // useEffect(() => {
+  //   apartmentArray = offerData.filter((city) => city.city.name === cityName);
+  // }, [cityName]);
+
+  // eslint-disable-next-line no-console
+  console.log(apartmentArray);
   return (
     <div className="page page--gray page--main">
       <Header></Header>

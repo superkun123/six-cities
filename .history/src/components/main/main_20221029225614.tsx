@@ -16,7 +16,6 @@ type MainScreenProps = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {placesCount, offerData} = props;
   const cityName = useSelector(selectCount);
-  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
   return (
     <div className="page page--gray page--main">
       <Header></Header>
@@ -48,12 +47,12 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferCardList offerData={apartmentArray } />
+                <OfferCardList offerData={offerData} />
               </div>
             </section>
             <div className="cities__right-section">
               <section className='cities__map map'>
-                <MainMap offerData={apartmentArray} />
+                <MainMap offerData={offerData} />
               </section>
             </div>
           </div>
