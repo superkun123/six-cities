@@ -17,6 +17,7 @@ const isPremium = function (classtype:string) {
 
 export default function OfferCard({singleOffer}:offerCardProprs):JSX.Element {
   const [isHover, setIsHover] = useState(false);
+  const rating = `${singleOffer.rating * 20}%`;
   return (
     <article className="cities__place-card place-card">
       {isPremium(singleOffer.class) &&
@@ -24,7 +25,7 @@ export default function OfferCard({singleOffer}:offerCardProprs):JSX.Element {
           <span>{singleOffer.class}</span>
         </div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`offer/${singleOffer.id}`} state={singleOffer.id}>
+        <Link to={`../offer/${singleOffer.id}`} state={singleOffer.id}>
           <div
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
@@ -39,22 +40,22 @@ export default function OfferCard({singleOffer}:offerCardProprs):JSX.Element {
             <b className="place-card__price-value">&euro;{singleOffer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          {/* <button className="place-card__bookmark-button button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">To bookmarks</span>
-          </button>
+          </button> */}
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '93%'}}></span>
+            <span style={{width: rating}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={AppRoute.Room}>
-            <a href="#">{singleOffer.title}</a>
+            {singleOffer.title}
           </Link>
         </h2>
         <p className="place-card__type">{singleOffer.type}</p>
