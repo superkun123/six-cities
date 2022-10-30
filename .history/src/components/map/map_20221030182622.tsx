@@ -7,13 +7,13 @@ type OfferCardListProprs = {
     cityCoords:Array<number>
 }
 
-export default function MainMap({offerData, cityCoords}:OfferCardListProprs):JSX.Element {
-  console.log(cityCoords);
+export default function MainMap(propss:OfferCardListProprs):JSX.Element {
+  const {offerData, cityCoords} = propss;
   return (
     <div style={{filter: 'grayscale(1)', height: '100%'}}>
-      <YMaps style={{height: 800, width: '100%'}}>
-        <div style={{height: 800, width: '100%'}}>
-          <Map height={800} width={'100%'}  state={{ center: cityCoords, zoom: 11 }}>
+      <YMaps style={{height: '100%', width: '100%'}}>
+        <div style={{height: '100%', width: '100%'}}>
+          <Map height={'100%'} width={'100%'}  defaultState={{ center: cityCoords, zoom: 11 }}>
             {offerData.map((props:SingleOffer) => <Placemark key={props.id} singleOffer={props} geometry={[props.location.latitude, props.location.longitude]} />)}
           </Map>
         </div>

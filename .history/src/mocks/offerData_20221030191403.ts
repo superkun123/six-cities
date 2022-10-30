@@ -144,8 +144,8 @@ export const offerData:OfferData = [
     isFavorite: false,
     isPremium: true,
     location: {
-      latitude: 53.550688,
-      longitude: 9.982895,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 10,
     },
     maxAdults: 4,

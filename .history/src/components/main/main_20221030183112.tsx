@@ -8,15 +8,15 @@ import CityBtnList from '../cities-btn-list/cities-btn-list';
 
 
 type MainScreenProps = {
+  placesCount: number,
   offerData: OfferData,
 }
 
 
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
-  const {offerData} = props;
+  const {placesCount, offerData} = props;
   const cityName = useSelector(selectCount);
   const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
-  const apartmenLenght = apartmentArray.length;
   const getCityCoords:Array<number> = [apartmentArray[0].city.location.latitude, apartmentArray[0].city.location.longitude];
   return (
     <div className="page page--gray page--main">
@@ -32,7 +32,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{apartmenLenght} places to stay in {cityName}</b>
+              <b className="places__found">{placesCount} places to stay in {cityName}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
