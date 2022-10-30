@@ -5,8 +5,7 @@ import  ReviewForm  from '../review_form/review-form';
 import Header from '../header/header';
 import ReviewsList from '../reviews/reviews-list';
 // import MainMap from '../map/map';
-// import { nearby } from '../../mocks/nearby';
-// import OfferCardList from '../offer-card/offer-card-list';
+import OfferCardList from '../offer-card/offer-card-list';
 
 
 type PropertyScreenProps = {
@@ -136,12 +135,12 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
           </section> */}
         </section>
         <div className="container">
-          {/* <section className="near-places places">
+          <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferCardList offerData={nearby}></OfferCardList>
+              <OfferCardList offerData={offerData}></OfferCardList>
             </div>
-          </section> */}
+          </section>
         </div>
       </main>
     </div>
