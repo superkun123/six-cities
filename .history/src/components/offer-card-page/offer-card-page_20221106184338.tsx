@@ -52,6 +52,10 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
     fetchData();
   }, [data]);
 
+  console.log(`data: ${data}`);
+  console.log(Fetchdata);
+
+
   const reviewsCont = commentGet.length;
   const rating = `${Fetchdata.rating * 20}%`;
   const getCityCoords:Array<number> = [Fetchdata.city.location.latitude, Fetchdata.city.location.longitude];
@@ -63,8 +67,8 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {Fetchdata.images.map((img, index) => (
-                <div  key={`image${img + index}`} className="property__image-wrapper">
+              {Fetchdata.images.map((img) => (
+                <div  key={`image${img}`} className="property__image-wrapper">
                   <img className="property__image" src={img} alt="Photo studio" />
                 </div>),
               )}

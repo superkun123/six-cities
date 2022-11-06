@@ -54,9 +54,7 @@ export default function OfferCard({singleOffer}:offerCardProprs):JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`../offer/${singleOffer.id}`} state={singleOffer.id}>
-            {singleOffer.title}
-          </Link>
+          {singleOffer.title}
         </h2>
         <p className="place-card__type">{singleOffer.type}</p>
         {isHover && (

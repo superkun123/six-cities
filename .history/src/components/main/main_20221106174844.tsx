@@ -22,6 +22,8 @@ type FetchType = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {offerData} = props;
   const [data, setData] = useState(offerData);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,6 +39,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const apartmentArray = data.filter((city) => city.city.name === cityName.trim());
   const apartmenLenght = apartmentArray.length;
   const getCityCoords:Array<number> = [apartmentArray[0].city.location.latitude, apartmentArray[0].city.location.longitude];
+  console.log(data);
   return (
     <div className="page page--gray page--main">
       <Header></Header>
@@ -52,7 +55,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{apartmenLenght} places to stay in {cityName}</b>
-              {/* <form className="places__sorting" action="#" method="get">
+              <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
               Popular
@@ -66,7 +69,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
                   <li className="places__option" tabIndex={0}>Price: high to low</li>
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
-              </form> */}
+              </form>
               <div className="cities__places-list places__list tabs__content">
                 <OfferCardList data={apartmentArray } />
               </div>

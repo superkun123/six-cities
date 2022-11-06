@@ -22,6 +22,8 @@ type FetchType = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {offerData} = props;
   const [data, setData] = useState(offerData);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -19,10 +19,6 @@ type FetchType = {
   data: SingleOffer,
 }
 
-type FetchType2 = {
-  data: OfferData,
-}
-
 
 export default function Property({offerData}:PropertyScreenProps):JSX.Element {
   const location = useLocation();
@@ -42,15 +38,19 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
     };
     const fetchNearby = async () => {
       try {
-        const response = await axios.get(`https://8.react.pages.academy/six-cities/hotels/${data}/nearby`) as FetchType2 ;
-        setNearby(response.data);
+        const response = await axios.get(`https://8.react.pages.academy/six-cities/hotels/${data}/nearby`) as OfferData;
+        setNearby(response);
       } catch (error) {
         console.error(error);
       }
     };
     fetchNearby();
     fetchData();
-  }, [data]);
+  }, []);
+
+  console.log(`data: ${data}`);
+  console.log(Fetchdata);
+
 
   const reviewsCont = commentGet.length;
   const rating = `${Fetchdata.rating * 20}%`;
@@ -63,8 +63,8 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {Fetchdata.images.map((img, index) => (
-                <div  key={`image${img + index}`} className="property__image-wrapper">
+              {Fetchdata.images.map((img) => (
+                <div  key={`image${img}`} className="property__image-wrapper">
                   <img className="property__image" src={img} alt="Photo studio" />
                 </div>),
               )}

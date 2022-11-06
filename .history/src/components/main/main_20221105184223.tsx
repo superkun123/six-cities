@@ -14,34 +14,32 @@ type MainScreenProps = {
   offerData: OfferData,
 }
 
-type FetchType = {
-  data: OfferData,
-}
-
 
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {offerData} = props;
-  const [data, setData] = useState(offerData);
+  const [data, setData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://8.react.pages.academy/six-cities/hotels') as FetchType;
+        const response:any = await axios.get('https://8.react.pages.academy/six-cities/hotels');
         setData(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, []);
+  }, [data]);
   const cityName = useSelector(selectCount);
-  const apartmentArray = data.filter((city) => city.city.name === cityName.trim());
+  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
   const apartmenLenght = apartmentArray.length;
   const getCityCoords:Array<number> = [apartmentArray[0].city.location.latitude, apartmentArray[0].city.location.longitude];
   return (
     <div className="page page--gray page--main">
       <Header></Header>
       <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
+        <h1 className="visually-hidden">{data}</h1>
         <div className="tabs">
           <section className="locations container">
             <CityBtnList />
@@ -68,7 +66,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
                 </ul>
               </form> */}
               <div className="cities__places-list places__list tabs__content">
-                <OfferCardList data={apartmentArray } />
+                <OfferCardList offerData={apartmentArray } />
               </div>
             </section>
             <div className="cities__right-section">

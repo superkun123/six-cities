@@ -6,35 +6,23 @@ import MainMap from '../map/map';
 import { useSelector } from 'react-redux';
 import { selectCount } from '../../store/reducer';
 import CityBtnList from '../cities-btn-list/cities-btn-list';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { fetchData } from '../../api/api';
 
 
 type MainScreenProps = {
   offerData: OfferData,
 }
 
-type FetchType = {
-  data: OfferData,
-}
-
 
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {offerData} = props;
-  const [data, setData] = useState(offerData);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://8.react.pages.academy/six-cities/hotels') as FetchType;
-        setData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchData();
   }, []);
   const cityName = useSelector(selectCount);
-  const apartmentArray = data.filter((city) => city.city.name === cityName.trim());
+  const apartmentArray = offerData.filter((city) => city.city.name === cityName.trim());
   const apartmenLenght = apartmentArray.length;
   const getCityCoords:Array<number> = [apartmentArray[0].city.location.latitude, apartmentArray[0].city.location.longitude];
   return (
@@ -68,7 +56,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
                 </ul>
               </form> */}
               <div className="cities__places-list places__list tabs__content">
-                <OfferCardList data={apartmentArray } />
+                <OfferCardList offerData={apartmentArray } />
               </div>
             </section>
             <div className="cities__right-section">

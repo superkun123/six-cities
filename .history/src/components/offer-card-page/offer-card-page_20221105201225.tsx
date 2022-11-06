@@ -1,26 +1,19 @@
 /* eslint-disable no-console */
 import { useLocation } from 'react-router-dom';
-import { OfferData, SingleOffer} from '../../types/types';
+import { OfferData} from '../../types/types';
 import { commentGet } from '../../mocks/commentGet';
 import  ReviewForm  from '../review_form/review-form';
 import Header from '../header/header';
 import ReviewsList from '../reviews/reviews-list';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import MainMap from '../map/map';
-import OfferCardList from '../offer-card/offer-card-list';
+// import MainMap from '../map/map';
+// import { nearby } from '../../mocks/nearby';
+// import OfferCardList from '../offer-card/offer-card-list';
 
 
 type PropertyScreenProps = {
   offerData: OfferData
-}
-
-type FetchType = {
-  data: SingleOffer,
-}
-
-type FetchType2 = {
-  data: OfferData,
 }
 
 
@@ -29,32 +22,26 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
   const state = location.state as number;
   const data = state;
   const [Fetchdata, setData] = useState(offerData[0]);
-  const [nearby, setNearby] = useState(offerData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://8.react.pages.academy/six-cities/hotels/${data}`) as FetchType;
+        const response:any = await axios.get(`https://8.react.pages.academy/six-cities/hotels/${data}`);
         setData(response.data);
       } catch (error) {
         console.error(error);
       }
     };
-    const fetchNearby = async () => {
-      try {
-        const response = await axios.get(`https://8.react.pages.academy/six-cities/hotels/${data}/nearby`) as FetchType2 ;
-        setNearby(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchNearby();
     fetchData();
-  }, [data]);
+  }, []);
+
+  console.log(`data: ${data}`);
+  console.log(Fetchdata);
+
 
   const reviewsCont = commentGet.length;
   const rating = `${Fetchdata.rating * 20}%`;
-  const getCityCoords:Array<number> = [Fetchdata.city.location.latitude, Fetchdata.city.location.longitude];
+
 
   return (
     <div className="page">
@@ -63,8 +50,8 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {Fetchdata.images.map((img, index) => (
-                <div  key={`image${img + index}`} className="property__image-wrapper">
+              {Fetchdata.images.map((img) => (
+                <div  key={`image${img}`} className="property__image-wrapper">
                   <img className="property__image" src={img} alt="Photo studio" />
                 </div>),
               )}
@@ -147,17 +134,17 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map">
-            <MainMap offerData={[Fetchdata]}  cityCoords={getCityCoords}/>
-          </section>
+          {/* <section className="property__map map">
+            <MainMap offerData={nearby}  />
+          </section> */}
         </section>
         <div className="container">
-          <section className="near-places places">
+          {/* <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferCardList data={nearby}></OfferCardList>
+              <OfferCardList offerData={nearby}></OfferCardList>
             </div>
-          </section>
+          </section> */}
         </div>
       </main>
     </div>

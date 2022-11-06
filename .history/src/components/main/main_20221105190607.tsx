@@ -22,6 +22,7 @@ type FetchType = {
 export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const {offerData} = props;
   const [data, setData] = useState(offerData);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,6 +38,7 @@ export default function MainScreen(props: MainScreenProps ):JSX.Element {
   const apartmentArray = data.filter((city) => city.city.name === cityName.trim());
   const apartmenLenght = apartmentArray.length;
   const getCityCoords:Array<number> = [apartmentArray[0].city.location.latitude, apartmentArray[0].city.location.longitude];
+  console.log(data);
   return (
     <div className="page page--gray page--main">
       <Header></Header>

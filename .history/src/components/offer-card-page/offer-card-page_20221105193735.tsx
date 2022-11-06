@@ -7,8 +7,9 @@ import Header from '../header/header';
 import ReviewsList from '../reviews/reviews-list';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import MainMap from '../map/map';
-import OfferCardList from '../offer-card/offer-card-list';
+// import MainMap from '../map/map';
+// import { nearby } from '../../mocks/nearby';
+// import OfferCardList from '../offer-card/offer-card-list';
 
 
 type PropertyScreenProps = {
@@ -16,10 +17,6 @@ type PropertyScreenProps = {
 }
 
 type FetchType = {
-  data: SingleOffer,
-}
-
-type FetchType2 = {
   data: OfferData,
 }
 
@@ -28,8 +25,7 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
   const location = useLocation();
   const state = location.state as number;
   const data = state;
-  const [Fetchdata, setData] = useState(offerData[0]);
-  const [nearby, setNearby] = useState(offerData);
+  const [Fetchdata, setData] = useState(offerData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,21 +36,31 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
         console.error(error);
       }
     };
-    const fetchNearby = async () => {
-      try {
-        const response = await axios.get(`https://8.react.pages.academy/six-cities/hotels/${data}/nearby`) as FetchType2 ;
-        setNearby(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchNearby();
     fetchData();
-  }, [data]);
+  }, []);
+
+  console.log(`data: ${data}`);
+  console.log(Fetchdata);
+  const currentFilter = function (elem:SingleOffer) {
+    if (elem.id === data) {
+      return elem;
+    }
+  };
+
+  function ensure<T>(argument: T | undefined | null, message = 'This value was promised to be there.'): T {
+    if (argument === undefined || argument === null) {
+      throw new TypeError(message);
+    }
+
+    return argument;
+  }
+
+  const currentData = ensure(Fetchdata.find(currentFilter));
 
   const reviewsCont = commentGet.length;
-  const rating = `${Fetchdata.rating * 20}%`;
-  const getCityCoords:Array<number> = [Fetchdata.city.location.latitude, Fetchdata.city.location.longitude];
+
+  const rating = `${currentData?.rating * 20}%`;
+
 
   return (
     <div className="page">
@@ -63,8 +69,8 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {Fetchdata.images.map((img, index) => (
-                <div  key={`image${img + index}`} className="property__image-wrapper">
+              {currentData?.images.map((img) => (
+                <div  key={`image${img}`} className="property__image-wrapper">
                   <img className="property__image" src={img} alt="Photo studio" />
                 </div>),
               )}
@@ -73,11 +79,11 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
           <div className="property__container container">
             <div className="property__wrapper">
               <div className="property__mark">
-                <span>{Fetchdata.type}</span>
+                <span>{currentData.type}</span>
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {Fetchdata.title}
+                  {currentData.title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -91,27 +97,27 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
                   <span style={{width: rating}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value"> {Fetchdata?.rating}</span>
+                <span className="property__rating-value rating__value"> {currentData?.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   Entire place
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {Fetchdata.bedrooms} Bedrooms
+                  {currentData.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {Fetchdata.maxAdults} adults
+                  Max {currentData.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{Fetchdata.price}</b>
+                <b className="property__price-value">&euro;{currentData.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {Fetchdata?.goods.map((good) => (
+                  {currentData?.goods.map((good) => (
                     <li key={`goods:${good}`} className="property__inside-item">
                       {good}
                     </li>),
@@ -147,17 +153,17 @@ export default function Property({offerData}:PropertyScreenProps):JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map">
-            <MainMap offerData={[Fetchdata]}  cityCoords={getCityCoords}/>
-          </section>
+          {/* <section className="property__map map">
+            <MainMap offerData={nearby}  />
+          </section> */}
         </section>
         <div className="container">
-          <section className="near-places places">
+          {/* <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OfferCardList data={nearby}></OfferCardList>
+              <OfferCardList offerData={nearby}></OfferCardList>
             </div>
-          </section>
+          </section> */}
         </div>
       </main>
     </div>
