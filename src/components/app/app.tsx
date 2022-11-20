@@ -21,9 +21,9 @@ function App({offerData}:AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<Main  offerData={offerData}></Main>}>
-        </Route>
         <Route path={AppRoute.SignIn} element={<Login></Login>}>
+        </Route>
+        <Route path={AppRoute.Main} element={<Main  offerData={offerData}></Main>}>
         </Route>
         <Route
           path={AppRoute.Favorites }
